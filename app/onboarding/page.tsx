@@ -16,7 +16,6 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(0)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   // Org
   const [orgName, setOrgName] = useState('')
@@ -41,6 +40,7 @@ export default function OnboardingPage() {
 
   const finish = async () => {
     setLoading(true)
+    const supabase = createClient()
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Non connecté')
