@@ -14,9 +14,9 @@ export async function middleware(request: NextRequest) {
 
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
-      get(name) { return request.cookies.get(name)?.value },
-      set(name, value, options) { response.cookies.set({ name, value, ...options }) },
-      remove(name, options) { response.cookies.set({ name, value: '', ...options }) },
+      get(name: string) { return request.cookies.get(name)?.value },
+      set(name: string, value: string, options: Record<string, unknown>) { response.cookies.set({ name, value, ...options }) },
+      remove(name: string, options: Record<string, unknown>) { response.cookies.set({ name, value: '', ...options }) },
     },
   })
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createAdminSupabaseClient } from '@/lib/supabase-server'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-04-10' })
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2023-10-16' })
 
 // Map Stripe price IDs to plan names
 const PRICE_TO_PLAN: Record<string, string> = {
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session
-      const orgId = session.subscription_data?.metadata?.org_id
+      const orgId = session.metadata?.org_id
       const subId = session.subscription as string
       if (orgId && subId) {
         const sub = await stripe.subscriptions.retrieve(subId)
@@ -82,4 +82,4 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ received: true })
 }
 
-export const config = { api: { bodyParser: false } }
+export const dynamic = 'force-dynamic'
