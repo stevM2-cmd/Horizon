@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+
+export const dynamic = 'force-dynamic'
 import { createServerSupabaseClient, createAdminSupabaseClient } from '@/lib/supabase-server'
 
 const ENEDIS_API = process.env.ENEDIS_API_URL || 'https://datahub-enedis.fr/api/v1'
